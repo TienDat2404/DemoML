@@ -1,0 +1,50 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score
+from sklearn.neural_network import MLPClassifier  # Import MLPClassifier
+import joblib
+
+# Đọc dữ liệu từ file CSV
+data = pd.read_csv('data.csv', sep=';')
+
+# Chọn các thuộc tính và nhãn
+X = data[['Weight (kg)', 'Height (cm)', 'Body Length (cm)', 'Has Horns', 'Fur Color', 'Lays Eggs', 'Age (years)']]
+y = data['Gender']
+
+# Tải lại label encoders từ file
+label_encoders = joblib.load(r'C:\Classification\Artifact\label_encoders.pkl')
+
+# Chuyển đổi các giá trị phân loại thành số cho X
+for column in ['Has Horns', 'Fur Color', 'Lays Eggs']:
+    X[column] = label_encoders[column].transform(X[column])
+
+# Chia dữ liệu thành tập huấn luyện và tập kiểm tra
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Tiêu chuẩn hóa dữ liệu
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Khởi tạo mô hình Neural Network
+model = MLPClassifier(hidden_layer_sizes=(10, 10),  # Có thể điều chỉnh số lượng và kích thước các lớp ẩn
+                      activation='relu',  # Hàm kích hoạt
+                      solver='adam',  # Phương pháp tối ưu hóa
+                      max_iter=1000,  # Số lần lặp tối đa
+                      random_state=42)
+
+# Huấn luyện mô hình
+model.fit(X_train, y_train)
+
+# Dự đoán trên tập kiểm tra
+y_pred = model.predict(X_test)
+
+# Tính toán chỉ số accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy: {accuracy:.2f}')
+
+# Lưu mô hình
+joblib.dump(model, r'C:\Classification\model\neural_network_model.pkl')
+joblib.dump(scaler, r'C:\Classification\Artifact\scaler.pkl')

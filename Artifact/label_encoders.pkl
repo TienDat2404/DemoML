@@ -1,0 +1,18 @@
+import pandas as pd
+import joblib
+from sklearn.preprocessing import LabelEncoder
+
+# Giả sử df là DataFrame của bạn
+df = pd.read_csv('data.csv')
+
+# Các cột cần mã hóa
+columns_to_encode = ['Species', 'Fur Color', 'Has Horns', 'Lays Eggs']
+
+label_encoders = {}
+for col in columns_to_encode:
+    le = LabelEncoder()
+    df[col] = le.fit_transform(df[col])
+    label_encoders[col] = le
+
+# Lưu lại LabelEncoder để sau này dùng cho dữ liệu mới hoặc dự đoán
+joblib.load(r'C:\Classification\Artifact\label_encoders.pkl')

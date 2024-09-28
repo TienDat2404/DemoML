@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân loại giới tính động vật</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: inline-block;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+        input[type="number"], input[type="text"], select {
+            width: calc(100% - 220px);
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-group select, .form-group input {
+            width: 45%;
+        }
+    </style>
+    <script src="validate.js"></script>
+</head>
+<body>
+
+<h1>Phân loại giới tính động vật</h1>
+<form method="POST" onsubmit="return validateForm()">
+    
+    <div class="form-group">
+        <label for="species">Loài:</label>
+        <select id="species" name="species">
+            <option value="Deer">Nai</option>
+            <option value="Chicken">Gà</option>
+            <option value="Lion">Sư tử</option>
+            <option value="Elephant">Voi</option>
+            <option value="Dog">Chó</option>
+            <option value="Cat">Mèo</option>
+            <option value="Eagle">Đại bàng</option>
+            <option value="Horse">Ngựa</option>
+            <option value="Penguin">Chim cánh cụt</option>
+            <option value="Snake">Rắn</option>
+            <option value="Frog">Ếch</option>
+            <option value="Giraffe">Hươu</option>
+            <option value="Whale">Cá voi</option>
+            <option value="Shark">Cá mập</option>
+            <option value="Kangaroo">Kangaroo</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="weight">Cân nặng (kg):</label>
+        <input type="number" id="weight" name="weight" step="any" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="height">Chiều cao (cm):</label>
+        <input type="number" id="height" name="height" step="any" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="body_length">Chiều dài thân thể (cm):</label>
+        <input type="number" id="body_length" name="body_length" step="any" required>
+    </div>
+
+    <div class="form-group">
+        <label for="age">Tuổi (năm):</label>
+        <input type="number" id="age" name="age" step="any" required>
+    </div>
+
+    <div class="form-group">
+        <label for="has_horns">Sừng:</label>
+        <select id="has_horns" name="has_horns" required>
+            <option value="Yes">Có</option>
+            <option value="No">Không</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="fur_color">Màu lông:</label>
+        <input type="text" id="fur_color" name="fur_color" required>
+    </div>
+
+    <div class="form-group">
+        <label for="lays_eggs">Đẻ trứng:</label>
+        <select id="lays_eggs" name="lays_eggs" required>
+            <option value="Yes">Có</option>
+            <option value="No">Không</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="model">Chọn mô hình dự đoán:</label>
+        <select id="model" name="model">
+            <option value="perceptron">Perceptron Algorithm</option>
+            <option value="logistic">Logistic Regression</option>
+            <option value="neural_network">Neural Network</option>
+        </select>
+    </div>
+
+    <button type="submit">Dự Đoán Giới Tính</button>
+</form>
+
+</body>
+</html>

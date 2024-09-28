@@ -1,0 +1,21 @@
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+import joblib
+
+# Đọc dữ liệu từ file CSV
+data = pd.read_csv('data.csv', sep=';')  # Đảm bảo sử dụng dấu phân cách đúng
+
+# Tạo đối tượng MinMaxScaler
+scaler = MinMaxScaler()
+
+# Chọn các cột số để chuẩn hóa
+numerical_columns = ['Weight (kg)', 'Height (cm)', 'Body Length (cm)', 'Age (years)']
+
+# Fit scaler và transform dữ liệu
+data[numerical_columns] = scaler.fit_transform(data[numerical_columns])
+
+# Lưu lại DataFrame đã chuẩn hóa
+data.to_csv('data.csv', index=False, sep=';')  # Lưu file chuẩn hóa
+
+# Lưu scaler vào file
+joblib.dump(scaler, r'C:\Classification\Artifact\scaler.pkl')

@@ -1,0 +1,61 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score
+import joblib
+import numpy as np
+
+# Đọc dữ liệu từ file CSV
+data = pd.read_csv('data.csv', sep=';')
+
+# Chọn các thuộc tính và nhãn
+X = data[['Weight (kg)', 'Height (cm)', 'Body Length (cm)', 'Has Horns', 'Fur Color', 'Lays Eggs', 'Age (years)']]
+y = data['Gender']
+
+# Tải lại label encoders từ file
+label_encoders = joblib.load(r'C:\Classification\Artifact\label_encoders.pkl')
+
+# Chuyển đổi các giá trị phân loại thành số cho X
+for column in ['Has Horns', 'Fur Color', 'Lays Eggs']:
+    X[column] = label_encoders[column].transform(X[column])
+
+# Chia dữ liệu thành tập huấn luyện và tập kiểm tra
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Tiêu chuẩn hóa dữ liệu
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Hàm sigmoid
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+
+# Hàm huấn luyện mô hình Logistic Regression
+def logistic_regression(X, y, learning_rate=0.01, epochs=1000):
+    m, n = X.shape
+    theta = np.zeros(n)
+    
+    for _ in range(epochs):
+        z = np.dot(X, theta)
+        y_pred = sigmoid(z)
+        error = y_pred - y
+        theta -= (learning_rate / m) * np.dot(X.T, error)
+
+    return theta
+
+# Huấn luyện mô hình
+theta = logistic_regression(X_train, y_train.values)
+
+# Dự đoán trên tập kiểm tra
+z_test = np.dot(X_test, theta)
+y_pred_proba = sigmoid(z_test)
+y_pred = np.where(y_pred_proba >= 0.5, 'Male', 'Female')
+
+# Tính toán chỉ số accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy: {accuracy:.2f}')
+
+# Lưu mô hình
+joblib.dump(theta, r'C:\Classification\model\logistic_model.pkl')
+joblib.dump(scaler, r'C:\Classification\Artifact\scaler.pkl')

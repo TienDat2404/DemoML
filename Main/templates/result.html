@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả Dự đoán Giới tính Động vật</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .result-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Kết quả Dự đoán Giới tính Động vật</h1>
+<div class="result-container">
+    <p><strong>Mô hình đã chọn:</strong> selected_model</p>
+    <p><strong>Dự đoán:</strong> prediction</p>
+    <p><strong>Chỉ số Accuracy:</strong> accuracy</p>
+    
+    <a href="{{ url_for('back') }}">
+        <button>Trở lại</button>
+    </a>
+</div>
+
+</body>
+</html>
