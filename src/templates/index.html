@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Gender Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            overflow: hidden;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background: #4cae4c;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 4px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dự Đoán Giới Tính Động Vật</h1>
+        <form method="POST" action="/predict">
+            <label for="animal_name">Chọn Tên Động Vật:</label>
+            <select name="animal_name" id="animal_name" required>
+                {% for name in animal_names %}
+                <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="weight">Cân Nặng (kg):</label>
+            <input type="text" name="weight" required>
+
+            <label for="height">Chiều Cao (cm):</label>
+            <input type="text" name="height" required>
+
+            <label for="body_length">Chiều Dài Cơ Thể (cm):</label>
+            <input type="text" name="body_length" required>
+
+            <label for="has_horns">Có Sừng:</label>
+            <select name="has_horns" required>
+                <option value="0">Không</option>
+                <option value="1">Có</option>
+            </select>
+
+            <label for="fur_color">Màu Lông:</label>
+            <select name="fur_color" required>
+                {% for color in fur_colors %}
+                <option value="{{ color }}">{{ color }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="lays_eggs">Lớp Trứng:</label>
+            <select name="lays_eggs" required>
+                <option value="0">Không</option>
+                <option value="1">Có</option>
+            </select>
+
+            <label for="age">Tuổi (năm):</label>
+            <input type="text" name="age" required>
+
+            <label for="model">Chọn Mô Hình:</label>
+            <select name="model" required>
+                <option value="perceptron">Perceptron</option>
+                <option value="logistic">Logistic Regression</option>
+                <option value="mlp">MLP Classifier</option>
+                <option value="bagging">Bagging</option>
+            </select>
+
+            <input type="submit" value="Dự Đoán">
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <h3>Kết Quả Dự Đoán:</h3>
+            <p>Giới Tính: {{ result.prediction }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
